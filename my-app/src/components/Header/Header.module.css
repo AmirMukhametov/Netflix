@@ -6,7 +6,7 @@
     gap: 20px;
 }
 
-.header h1 {
+.header h1{
     font-size: 16px;
     font-weight: 400;
     color: #fff;
@@ -29,6 +29,14 @@
     gap: 20px;
     align-items: center;
     flex-shrink: 0;
+}
+
+.active {
+    color: #e5e5e5;
+    text-decoration: underline;
+    text-decoration-color: #e5e5e5;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
 }
 
 /* Адаптивность для мобильных устройств */
