@@ -19,14 +19,11 @@ export const Header = ({ onSearch }) => {
         <NavLink to='/' className={location.pathname === '/' ? styles.active : ''}>
           <h1>Главная</h1>
         </NavLink>
-        <NavLink to='/movies' className={location.pathname === '/movies' ? styles.active : ''}>
+        <NavLink to='/my-list' className={location.pathname === '/my-list' ? styles.active : ''}>
           <h1>Избранное</h1>
         </NavLink>
-        <NavLink to='/series' className={location.pathname === '/series' ? styles.active : ''}>
-          <h1>Сериалы</h1>
-        </NavLink>
-        <NavLink to='/my-list' className={location.pathname === '/my-list' ? styles.active : ''}>
-          <h1>Мой список</h1>
+        <NavLink to='/log-in' className={location.pathname === '/log-in' ? styles.active : ''}>
+          <h1>Вход</h1>
         </NavLink>
       </div>
       

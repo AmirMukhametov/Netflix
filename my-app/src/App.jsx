@@ -3,9 +3,8 @@ import './App.css';
 import { Header } from './components/Header/Header';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import { MoviesPage } from './pages/MoviesPage';
-import { SeriesPage } from './pages/SeriesPage';
 import { MyListPage } from './pages/MyListPage';
+import { MyAccount } from './pages/MyAccount';
 import { searchMovies } from './services/movieApi';
 
 function App() {
@@ -36,9 +35,8 @@ function App() {
         <Header onSearch={handleSearch} />
         <Routes>
           <Route path='/' element={<HomePage searchResults={searchResults} isLoading={isLoading} />} />
-          <Route path='/movies' element={<MoviesPage />} />
-          <Route path='/series' element={<SeriesPage />} />
           <Route path='/my-list' element={<MyListPage />} />
+          <Route path='/log-in' element={<MyAccount />} />
         </Routes>
       </div>
     </Router>
