@@ -1,72 +1,24 @@
-.searchWrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.searchForm {
-  display: flex;
-  align-items: center;
-}
-
 .searchContainer {
   position: relative;
-  display: flex;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 8px 16px;
-  transition: all 0.3s ease;
-  border: 1px solid transparent;
-}
-
-.searchContainer:focus-within {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+  width: 300px;
 }
 
 .searchInput {
-  background: transparent;
+  width: 100%;
+  padding: 10px 16px;
   border: none;
-  outline: none;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
   color: white;
   font-size: 14px;
-  width: 200px;
-  padding-right: 40px;
+  outline: none;
+  transition: background-color 0.3s ease;
 }
 
 .searchInput::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.searchButton {
-  position: absolute;
-  right: 8px;
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.7);
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.searchInput:focus {
+  background: rgba(255, 255, 255, 0.2);
 }
-
-.searchButton:hover {
-  color: white;
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Адаптивность для мобильных устройств */
-@media (max-width: 768px) {
-  .searchInput {
-    width: 150px;
-  }
-  
-  .searchContainer {
-    padding: 6px 12px;
-  }
-} 

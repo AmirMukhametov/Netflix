@@ -19,7 +19,7 @@
     color: #e5e5e5;
 }
 
-.logo {
+.logoContainer {
     display: flex;
     align-items: center;
     gap: 10px;

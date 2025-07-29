@@ -1,36 +1,32 @@
-import React, { useState } from 'react';
-import { SearchResults } from '../components/SearchResults/SearchResults';
-import { MovieModal } from '../components/MovieModal/MovieModal';
+import React from 'react';
+import { fetchTrendingMovies } from '../services/movieApi';
+import { useState, useEffect } from 'react';
 
-function HomePage({ searchResults, isLoading }) {
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleMovieClick = (movie) => {
-    setSelectedMovie(movie);
-    setIsModalOpen(true);
-  };
+function HomePage() {
+  const [trendingMovies, setTrendingMovies] = useState([]);
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedMovie(null);
-  };
+  useEffect(() => {
+    fetchTrendingMovies().then(setTrendingMovies);
+  }, []);
 
+  console.log(trendingMovies.map(movie => movie));
+
+  
   return (
-    <>
-      <main>
-        <SearchResults 
-          movies={searchResults}
-          onMovieClick={handleMovieClick}
-          isLoading={isLoading}
-        />
-      </main>
-      <MovieModal 
-        movie={selectedMovie}
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      />
-    </>
+    <main>
+      <h1>Тренды</h1>
+      <div>
+        {
+          trendingMovies.map((movie) => (
+            <div key={movie.id}>
+              <h2>{movie.title}</h2>
+              <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} />
+            </div>
+          ))
+        }
+      </div>
+    </main>
   );
 }
 

@@ -1,44 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { SearchSuggestions } from '../SearchSuggestions/SearchSuggestions';
 import styles from './SearchInput.module.css';
 
-export const SearchInput = ({ onSearch, placeholder = "Поиск фильмов..." }) => {
+export const SearchInput = ({ onSearch, searchResults, isLoading, onMovieClick }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (inputRef.current && !inputRef.current.contains(event.target)) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
-    onSearch(value);
+    
+    if (value.trim()) {
+      onSearch(value);
+      setShowSuggestions(true);
+    } else {
+      setShowSuggestions(false);
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSearch(searchTerm);
+  const handleMovieSelect = (movie) => {
+    onMovieClick(movie);
+    setShowSuggestions(false);
+    setSearchTerm('');
   };
 
   return (
-    <form className={styles.searchForm} onSubmit={handleSubmit}>
-      <div className={styles.searchContainer}>
-        <input
-          type="text"
-          className={styles.searchInput}
-          placeholder={placeholder}
-          value={searchTerm}
-          onChange={handleInputChange}
-        />
-        <button type="submit" className={styles.searchButton}>
-          <svg 
-            width="16" 
-            height="16" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2"
-          >
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.35-4.35"/>
-          </svg>
-        </button>
-      </div>
-    </form>
+    <div className={styles.searchContainer} ref={inputRef}>
+      <input
+        type="text"
+        placeholder="Поиск фильмов..."
+        value={searchTerm}
+        onChange={handleInputChange}
+        className={styles.searchInput}
+      />
+      <SearchSuggestions
+        movies={searchResults}
+        onMovieClick={handleMovieSelect}
+        isLoading={isLoading}
+        isVisible={showSuggestions}
+      />
+    </div>
   );
 };

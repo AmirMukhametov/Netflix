@@ -1,0 +1,70 @@
+.suggestionsContainer {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid #333;
+    border-radius: 8px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  .suggestionsList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .suggestionItem {
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid #333;
+  }
+  
+  .suggestionItem:last-child {
+    border-bottom: none;
+  }
+  
+  .suggestionItem:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .movieInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .moviePoster {
+    width: 40px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  .movieDetails {
+    flex: 1;
+  }
+  
+  .movieTitle {
+    margin: 0 0 4px 0;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .movieYear {
+    margin: 0;
+    color: #999;
+    font-size: 12px;
+  }
+  
+  .loading {
+    padding: 16px;
+    text-align: center;
+    color: #999;
+  }
