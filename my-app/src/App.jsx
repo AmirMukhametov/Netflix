@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import { Header } from './components/Header/Header';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/HomePage/HomePage';
 import { MovieModal } from './components/MovieModal/MovieModal';
 import { MyAccount } from './pages/MyAccount';
 import { MyListPage } from './pages/MyListPage';

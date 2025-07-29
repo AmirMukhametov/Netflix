@@ -1,12 +1,13 @@
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
     text-decoration: none;
     color: inherit;
 }
 
 body {
+    margin: 0;
+    padding: 0;
     background-color: #000;
     color: #fff;
 }
+
