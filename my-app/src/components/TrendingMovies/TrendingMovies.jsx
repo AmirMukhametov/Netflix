@@ -1,59 +1,91 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './TrendingMovies.module.css';
 
 const MOVIES_VISIBLE = 5;
 
 export const TrendingMovies = ({ trendingMovies }) => {
   const [startIndex, setStartIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Бесконечный сдвиг вперёд
+  // Плавный сдвиг вперёд на 1 элемент
   const handleNext = () => {
-    setStartIndex((prevIndex) =>
-      (prevIndex + MOVIES_VISIBLE) % trendingMovies.length
-    );
+    if (!isTransitioning) {
+      setIsTransitioning(true);
+      setStartIndex((prevIndex) =>
+        (prevIndex + 1) % trendingMovies.length
+      );
+    }
   };
 
-  // Бесконечный сдвиг назад
+  // Плавный сдвиг назад на 1 элемент
   const handlePrev = () => {
-    setStartIndex((prevIndex) =>
-      (prevIndex - MOVIES_VISIBLE + trendingMovies.length) % trendingMovies.length
-    );
+    if (!isTransitioning) {
+      setIsTransitioning(true);
+      setStartIndex((prevIndex) =>
+        (prevIndex - 1 + trendingMovies.length) % trendingMovies.length
+      );
+    }
   };
 
-  // Получить 5 фильмов, начиная с текущего индекса — с цикличностью
-  const visibleMovies = Array.from({ length: MOVIES_VISIBLE }).map((_, i) => {
-    const index = (startIndex + i) % trendingMovies.length;
-    return trendingMovies[index];
-  });
+  // Сброс состояния перехода после анимации
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [startIndex]);
+
+  // Создаем массив всех фильмов для бесконечной прокрутки
+  const extendedMovies = [...trendingMovies, ...trendingMovies];
 
   return (
     <div className={styles.trendingWrapper}>
       <h1 className={styles.trendingMoviesTitle}>Тренды</h1>
 
       <div className={styles.carousel}>
-        <button onClick={handlePrev} className={styles.navButton}>←</button>
+        <button 
+          onClick={handlePrev} 
+          className={styles.navButton}
+          disabled={isTransitioning}
+        >
+          ←
+        </button>
 
-        <div className={styles.trendingMovies}>
-        {visibleMovies
-            .filter(movie => movie && movie.poster_path) // ← фильтруем только те, у кого есть постер
-            .map((movie) => (
-                <div key={movie.id} className={styles.movieCard}>
-                    <div className={styles.moviePoster}>
-                        <img
-                        src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                        alt={movie.title || 'Без названия'}
-                        />
-                    </div>
-                    <div className={styles.movieInfo}>
-                        <h2 className={styles.movieTitle}>{movie.title}</h2>
-                        <p className={styles.movieYear}>{movie.release_date}</p>
-                    </div>
+        <div className={styles.carouselTrack}>
+          <div 
+            className={styles.trendingMovies}
+            style={{
+              transform: `translateX(-${startIndex * 196}px)`, // 180px ширина + 16px gap
+              transition: isTransitioning ? 'transform 0.3s ease-in-out' : 'none'
+            }}
+          >
+            {extendedMovies
+              .filter(movie => movie && movie.poster_path)
+              .map((movie, index) => (
+                <div key={`${movie.id}-${index}`} className={styles.movieCard}>
+                  <div className={styles.moviePoster}>
+                    <img
+                      src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                      alt={movie.title || 'Без названия'}
+                    />
+                  </div>
+                  <div className={styles.movieInfo}>
+                    <h2 className={styles.movieTitle}>{movie.title}</h2>
+                    <p className={styles.movieYear}>{movie.release_date}</p>
+                  </div>
                 </div>
-))}
-
+              ))}
+          </div>
         </div>
 
-        <button onClick={handleNext} className={styles.navButton}>→</button>
+        <button 
+          onClick={handleNext} 
+          className={styles.navButton}
+          disabled={isTransitioning}
+        >
+          →
+        </button>
       </div>
     </div>
   );
