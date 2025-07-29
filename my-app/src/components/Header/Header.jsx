@@ -11,7 +11,7 @@ export const Header = ({ onSearch }) => {
     <header className={styles.header}>
       <NavLink to='/'>
         <div className={styles.logo}>
-          <p className={styles.logoName}>CineSnark</p>
+          <p className={styles.logoName}>CineFlix</p>
           <img className={styles.logoImg} src={logo} alt="logo" />
         </div>
       </NavLink>
