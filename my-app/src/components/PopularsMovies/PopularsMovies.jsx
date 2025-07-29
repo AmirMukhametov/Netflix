@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import styles from './TrendingMovies.module.css';
+import styles from './PopularsMovies.module.css';
 
 const MOVIES_VISIBLE = 5;
 
-export const TrendingMovies = ({ trendingMovies }) => {
+export const PopularsMovies = ({ popularMovies }) => {
   const [startIndex, setStartIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -12,7 +12,7 @@ export const TrendingMovies = ({ trendingMovies }) => {
     if (!isTransitioning) {
       setIsTransitioning(true);
       setStartIndex((prevIndex) =>
-        (prevIndex + 1) % trendingMovies.length
+        (prevIndex + 1) % popularMovies.length
       );
     }
   };
@@ -22,7 +22,7 @@ export const TrendingMovies = ({ trendingMovies }) => {
     if (!isTransitioning) {
       setIsTransitioning(true);
       setStartIndex((prevIndex) =>
-        (prevIndex - 1 + trendingMovies.length) % trendingMovies.length
+        (prevIndex - 1 + popularMovies.length) % popularMovies.length
       );
     }
   };
@@ -37,11 +37,11 @@ export const TrendingMovies = ({ trendingMovies }) => {
   }, [startIndex]);
 
   // Создаем массив всех фильмов для бесконечной прокрутки
-  const extendedMovies = [...trendingMovies, ...trendingMovies];
+  const extendedMovies = [...popularMovies, ...popularMovies];
 
   return (
     <div className={styles.trendingWrapper}>
-      <h1 className={styles.trendingMoviesTitle}>В тренде</h1>
+      <h1 className={styles.trendingMoviesTitle}>Популярные</h1>
 
       <div className={styles.carousel}>
         <button 

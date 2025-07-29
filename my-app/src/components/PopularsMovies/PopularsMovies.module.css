@@ -1,0 +1,159 @@
+.trendingWrapper {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .trendingMoviesTitle {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: white;
+  }
+  
+  .carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+  }
+  
+  .carouselTrack {
+    overflow: hidden;
+    width: 100%;
+    max-width: 1000px;
+  }
+  
+  .trendingMovies {
+    display: flex;
+    gap: 16px;
+    /* Убираем width: 100% чтобы контейнер мог быть шире */
+  }
+  
+  .movieCard {
+    min-width: 180px;
+    max-width: 180px;
+    position: relative;
+    background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+  
+  .movieCard:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  }
+  
+  .moviePoster img {
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .movieCard:hover .moviePoster img {
+    transform: scale(1.05);
+  }
+  
+  .movieInfo {
+    padding: 12px;
+    background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .movieTitle {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+    color: white;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .movieYear {
+    font-size: 12px;
+    color: #b3b3b3;
+    margin: 0;
+  }
+  
+  .navButton {
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .navButton:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.9);
+    transform: scale(1.1);
+  }
+  
+  .navButton:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .carouselTrack {
+      max-width: 600px;
+    }
+    
+    .movieCard {
+      min-width: 140px;
+      max-width: 140px;
+    }
+    
+    .moviePoster img {
+      height: 210px;
+    }
+    
+    .navButton {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .carouselTrack {
+      max-width: 400px;
+    }
+    
+    .movieCard {
+      min-width: 120px;
+      max-width: 120px;
+    }
+    
+    .moviePoster img {
+      height: 180px;
+    }
+    
+    .navButton {
+      width: 35px;
+      height: 35px;
+      font-size: 18px;
+    }
+  }
