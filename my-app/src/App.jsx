@@ -4,8 +4,8 @@ import { Header } from './components/Header/Header';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import HomePage from './pages/HomePage/HomePage';
 import { MovieModal } from './components/MovieModal/MovieModal';
-import { MyAccount } from './pages/MyAccount';
-import { MyListPage } from './pages/MyListPage';
+import { MyAccount } from './pages/MyAccount/MyAccount';
+import { MyListPage } from './pages/MyListPage/MyListPage';
 import { searchMovies } from './services/movieApi';
 
 function App() {
