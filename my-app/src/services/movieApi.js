@@ -31,14 +31,41 @@ export const getMovieDetails = async (imdbID) => {
   }
 };
 
+export const getTMDbMovieDetails = async (movieId) => {
+  console.log('Fetching TMDb movie details for ID:', movieId);
+  try {
+    const response = await fetch(
+      `${TMDb_URL}/movie/${movieId}?api_key=${API_KEY_TMDb}&append_to_response=credits,videos,images&language=ru-RU`
+    );
+    
+    if (!response.ok) {
+      throw new Error('Ошибка загрузки данных');
+    }
+    
+    const data = await response.json();
+    console.log('TMDb movie details received:', data);
+    
+    // Извлекаем режиссера из credits
+    const director = data.credits?.crew?.find(person => person.job === 'Director')?.name;
+    
+    return {
+      ...data,
+      director
+    };
+  } catch (error) {
+    console.error('Ошибка при получении деталей фильма:', error);
+    throw error;
+  }
+};
+
 export const fetchTrendingMovies = async () => {
   try {
-    const response = await fetch(`${TMDb_URL}/trending/movie/week?api_key=${API_KEY_TMDb}`);
+    const response = await fetch(`${TMDb_URL}/trending/movie/week?api_key=${API_KEY_TMDb}&language=ru-RU`);
     const data = await response.json();
-    return data.results;
+    return data.results || [];
   } catch (error) {
     console.error('Ошибка получения трендовых фильмов:', error);
-    return null;
+    return [];
   }
 };
 
@@ -46,11 +73,9 @@ export const fetchTopRatedMovies = async () => {
   try {
     const response = await fetch(`${TMDb_URL}/movie/top_rated?api_key=${API_KEY_TMDb}&language=ru-RU&page=1`);
     const data = await response.json();
-    return data.results;
+    return data.results || [];
   } catch (error) {
     console.error('Ошибка получения лучших фильмов:', error);
     return [];
   }
 };
-
- 

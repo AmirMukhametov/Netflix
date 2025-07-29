@@ -3,7 +3,7 @@ import styles from './TrendingMovies.module.css';
 
 const MOVIES_VISIBLE = 5;
 
-export const TrendingMovies = ({ trendingMovies }) => {
+export const TrendingMovies = ({ trendingMovies, onMovieClick }) => {
   const [startIndex, setStartIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -36,6 +36,13 @@ export const TrendingMovies = ({ trendingMovies }) => {
     return () => clearTimeout(timer);
   }, [startIndex]);
 
+  const handleMovieClick = (movie) => {
+    console.log('Movie card clicked:', movie); // Добавить для отладки
+    if (onMovieClick) {
+      onMovieClick(movie);
+    }
+  };
+
   // Создаем массив всех фильмов для бесконечной прокрутки
   const extendedMovies = [...trendingMovies, ...trendingMovies];
 
@@ -56,14 +63,18 @@ export const TrendingMovies = ({ trendingMovies }) => {
           <div 
             className={styles.trendingMovies}
             style={{
-              transform: `translateX(-${startIndex * 196}px)`, // 180px ширина + 16px gap
+              transform: `translateX(-${startIndex * 196}px)`,
               transition: isTransitioning ? 'transform 0.3s ease-in-out' : 'none'
             }}
           >
             {extendedMovies
               .filter(movie => movie && movie.poster_path)
               .map((movie, index) => (
-                <div key={`${movie.id}-${index}`} className={styles.movieCard}>
+                <div 
+                  key={`${movie.id}-${index}`} 
+                  className={styles.movieCard}
+                  onClick={() => handleMovieClick(movie)}
+                >
                   <div className={styles.moviePoster}>
                     <img
                       src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}

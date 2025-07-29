@@ -3,13 +3,19 @@ import styles from './PopularsMovies.module.css';
 
 const MOVIES_VISIBLE = 5;
 
-export const PopularsMovies = ({ popularMovies }) => {
+export const PopularsMovies = ({ popularMovies, onMovieClick }) => {
   const [startIndex, setStartIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  // Проверяем, что popularMovies является массивом
+  if (!Array.isArray(popularMovies)) {
+    console.warn('PopularsMovies: popularMovies is not an array:', popularMovies);
+    return <div>Загрузка популярных фильмов...</div>;
+  }
+
   // Плавный сдвиг вперёд на 1 элемент
   const handleNext = () => {
-    if (!isTransitioning) {
+    if (!isTransitioning && popularMovies.length > 0) {
       setIsTransitioning(true);
       setStartIndex((prevIndex) =>
         (prevIndex + 1) % popularMovies.length
@@ -19,7 +25,7 @@ export const PopularsMovies = ({ popularMovies }) => {
 
   // Плавный сдвиг назад на 1 элемент
   const handlePrev = () => {
-    if (!isTransitioning) {
+    if (!isTransitioning && popularMovies.length > 0) {
       setIsTransitioning(true);
       setStartIndex((prevIndex) =>
         (prevIndex - 1 + popularMovies.length) % popularMovies.length
@@ -36,18 +42,25 @@ export const PopularsMovies = ({ popularMovies }) => {
     return () => clearTimeout(timer);
   }, [startIndex]);
 
+  const handleMovieClick = (movie) => {
+    console.log('Popular movie card clicked:', movie);
+    if (onMovieClick) {
+      onMovieClick(movie);
+    }
+  };
+
   // Создаем массив всех фильмов для бесконечной прокрутки
   const extendedMovies = [...popularMovies, ...popularMovies];
 
   return (
     <div className={styles.trendingWrapper}>
-      <h1 className={styles.trendingMoviesTitle}>Популярные</h1>
+      <h1 className={styles.trendingMoviesTitle}>Популярные фильмы</h1>
 
       <div className={styles.carousel}>
         <button 
           onClick={handlePrev} 
           className={styles.navButton}
-          disabled={isTransitioning}
+          disabled={isTransitioning || popularMovies.length === 0}
         >
           ←
         </button>
@@ -56,14 +69,18 @@ export const PopularsMovies = ({ popularMovies }) => {
           <div 
             className={styles.trendingMovies}
             style={{
-              transform: `translateX(-${startIndex * 196}px)`, // 180px ширина + 16px gap
+              transform: `translateX(-${startIndex * 196}px)`,
               transition: isTransitioning ? 'transform 0.3s ease-in-out' : 'none'
             }}
           >
             {extendedMovies
               .filter(movie => movie && movie.poster_path)
               .map((movie, index) => (
-                <div key={`${movie.id}-${index}`} className={styles.movieCard}>
+                <div 
+                  key={`${movie.id}-${index}`} 
+                  className={styles.movieCard}
+                  onClick={() => handleMovieClick(movie)}
+                >
                   <div className={styles.moviePoster}>
                     <img
                       src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
@@ -82,7 +99,7 @@ export const PopularsMovies = ({ popularMovies }) => {
         <button 
           onClick={handleNext} 
           className={styles.navButton}
-          disabled={isTransitioning}
+          disabled={isTransitioning || popularMovies.length === 0}
         >
           →
         </button>

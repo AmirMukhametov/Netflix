@@ -1,0 +1,247 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+  
+  .modalContent {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+  }
+  
+  .closeButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .loading, .error {
+    padding: 60px 20px;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #e50914;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .retryButton {
+    background: #e50914;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+  }
+  
+  .retryButton:hover {
+    background: #b2070e;
+  }
+  
+  .movieDetails {
+    padding: 20px;
+  }
+  
+  .movieHeader {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .posterContainer {
+    flex-shrink: 0;
+  }
+  
+  .poster {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .noPoster {
+    width: 200px;
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .movieInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .title {
+    color: white;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+    line-height: 1.2;
+  }
+  
+  .meta {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  
+  .year, .runtime, .rating {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+  }
+  
+  .rating {
+    background-color: rgba(255, 193, 7, 0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: #ffc107;
+  }
+  
+  .genres {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .genre {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  .movieBody {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .plot h3 {
+    color: white;
+    font-size: 18px;
+    margin: 0 0 12px 0;
+  }
+  
+  .plot p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin: 0;
+  }
+  
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .detailRow {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .label {
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+  
+  .value {
+    color: rgba(255, 255, 255, 0.9);
+    flex: 1;
+  }
+  
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .modalOverlay {
+      padding: 10px;
+    }
+    
+    .movieHeader {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .poster, .noPoster {
+      width: 150px;
+      height: 225px;
+    }
+    
+    .title {
+      font-size: 24px;
+    }
+    
+    .meta {
+      justify-content: center;
+    }
+    
+    .detailRow {
+      flex-direction: column;
+      gap: 4px;
+    }
+    
+    .label {
+      min-width: auto;
+    }
+  }

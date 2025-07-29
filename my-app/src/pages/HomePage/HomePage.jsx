@@ -1,12 +1,11 @@
 import React from 'react';
 import styles from './HomePage.module.css';
-
 import { fetchTrendingMovies, fetchTopRatedMovies } from '../../services/movieApi';
 import { useState, useEffect } from 'react';
 import { TrendingMovies } from '../../components/TrendingMovies/TrendingMovies';
 import { PopularsMovies } from '../../components/PopularsMovies/PopularsMovies'
 
-function HomePage() {
+function HomePage({ onTMDbMovieClick }) {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
 
@@ -18,13 +17,24 @@ function HomePage() {
     fetchTopRatedMovies().then(setPopularMovies);
   }, []);
 
-  console.log(trendingMovies.map(movie => movie));
+  // Отладка
+  console.log('HomePage render:', { 
+    onTMDbMovieClick: !!onTMDbMovieClick, 
+    trendingMoviesCount: trendingMovies.length,
+    popularMoviesCount: popularMovies.length,
+    popularMoviesType: typeof popularMovies
+  });
 
-  
   return (
     <main className={styles.main}>
-      <TrendingMovies trendingMovies={trendingMovies} />
-      <PopularsMovies popularMovies={popularMovies} />
+      <TrendingMovies 
+        trendingMovies={trendingMovies} 
+        onMovieClick={onTMDbMovieClick}
+      />
+      <PopularsMovies 
+        popularMovies={popularMovies} 
+        onMovieClick={onTMDbMovieClick}
+      />
     </main>
   );
 }

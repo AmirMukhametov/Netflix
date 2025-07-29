@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Header } from './components/Header/Header';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
@@ -7,12 +7,15 @@ import { MovieModal } from './components/MovieModal/MovieModal';
 import { MyAccount } from './pages/MyAccount/MyAccount';
 import { MyListPage } from './pages/MyListPage/MyListPage';
 import { searchMovies } from './services/movieApi';
+import { TMDbMovieModal } from './components/TMDbMovieModal/TMDbMovieModal';
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTMDbModalOpen, setIsTMDbModalOpen] = useState(false);
+  const [selectedTMDbMovie, setSelectedTMDbMovie] = useState(null);
 
   const handleSearch = async (searchTerm) => {
     if (!searchTerm.trim()) {
@@ -42,6 +45,25 @@ function App() {
     setSelectedMovie(null);
   };
 
+  const handleTMDbMovieClick = (movie) => {
+    console.log('TMDb movie clicked in App:', movie);
+    setSelectedTMDbMovie(movie);
+    setIsTMDbModalOpen(true);
+  };
+  
+  const handleCloseTMDbModal = () => {
+    setIsTMDbModalOpen(false);
+    setSelectedTMDbMovie(null);
+  };
+
+  // Отладка состояния модального окна
+  useEffect(() => {
+    console.log('TMDb Modal State changed:', { 
+      isTMDbModalOpen, 
+      selectedTMDbMovie: selectedTMDbMovie?.title 
+    });
+  }, [isTMDbModalOpen, selectedTMDbMovie]);
+
   return (
     <Router>
       <div className='App'>
@@ -52,8 +74,8 @@ function App() {
           onMovieClick={handleMovieClick}
         />
         <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/movies' element={<HomePage />} />
+          <Route path='/' element={<HomePage onTMDbMovieClick={handleTMDbMovieClick} />} />
+          <Route path='/movies' element={<HomePage onTMDbMovieClick={handleTMDbMovieClick} />} />
           <Route path='/series' element={<MyAccount />} />
           <Route path='/my-list' element={<MyListPage />} />
         </Routes>
@@ -61,6 +83,11 @@ function App() {
           movie={selectedMovie}
           isOpen={isModalOpen}
           onClose={handleCloseModal}
+        />
+        <TMDbMovieModal
+          movie={selectedTMDbMovie}
+          isOpen={isTMDbModalOpen}
+          onClose={handleCloseTMDbModal}
         />
       </div>
     </Router>
