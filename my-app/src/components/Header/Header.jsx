@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styles from './Header.module.css';
 import { SearchInput } from '../SearchInput/SearchInput';
-import logo from '../../../public/netflix.png';
+import logo from '../../../src/assets/logo.png';
 
 export const Header = ({ onSearch }) => {
   const location = useLocation();
@@ -10,7 +10,10 @@ export const Header = ({ onSearch }) => {
   return (
     <header className={styles.header}>
       <NavLink to='/'>
-        <img className={styles.logo} src={logo} alt="logo" />
+        <div className={styles.logo}>
+          <p className={styles.logoName}>CineSnark</p>
+          <img className={styles.logoImg} src={logo} alt="logo" />
+        </div>
       </NavLink>
 
       <SearchInput onSearch={onSearch} />
